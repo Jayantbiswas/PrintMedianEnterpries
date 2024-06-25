@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <h4 class="mb-3">Price Details</h4>
+    <hr>
+    <table class="table table-hover table-borderless">
+        <tbody>
+            <tr class="mb-3">
+                <th scope="col">Items</th>
+                <th></th>
+                <td scope="col">{{totalItems}}</td>
+            </tr>
+            <tr class="mb-3">
+                <th scope="row">Price</th>
+                <td></td>
+                <td>{{productPrice}}</td>
+            </tr>
+            <tr class="mb-3">
+                <th scope="row">Discount</th>
+                <td></td>
+                <td>{{(productPrice>1000)?discount:0}}</td>
+            </tr>
+            <hr style="width: 150%;">
+            <tr class="mb-3">
+                <th scope="row">Total</th>
+                <td></td>
+                <th colspan="2">{{totalPrice}}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>

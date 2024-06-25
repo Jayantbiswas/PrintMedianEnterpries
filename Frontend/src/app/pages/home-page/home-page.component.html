@@ -1,0 +1,84 @@
+<div class="container-fluid  bg-dark ">
+    <div id="carouselCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner" data-bs-interval="5000">
+            <div class="carousel-item active">
+                <img src="../../../assets/images/Slide1.jpg" class="d-block mx-auto w-50" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Print Median Enterprises</h5>
+                    <p>Printing Excellence Since 2012.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="../../../assets/images/Slide2.jpg" class="d-block mx-auto w-50" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Print Median Enterprises</h5>
+                    <p>Printing Excellence Since 2012.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="../../../assets/images/Slide3.jpg" class="d-block mx-auto w-50" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Print Median Enterprises</h5>
+                    <p>Printing Excellence Since 2012.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<div class="container mx-auto m-5 p-3 text-center">
+    <div class="row justify-content-evenly border border-2 border-dark">
+        <div class="col-10 col-lg-7 col-md-10 col-sm-10 d-flex justify-content-evenly align-items-center m-3">
+            <span>
+                <h1 id="underline-hover" style="font-family:Georgia, 'Times New Roman', Times, serif"
+                    class="fw-bold m-3 p-3">OUR MISSION
+                </h1>
+                <h5 class="my-3 p-2">
+                    Our Mission is Simple : To deliver outstanding print products that exceed our customer's
+                    expectations.
+                    Whether you're a startup, a small business, or a large corporation, we're committed to helping you
+                    stand
+                    out with top-notch prints that leave a lasting impression. </h5>
+                <button class="btn btn-dark border border-3 border-dark fw-bold" id="hover-btn"><a href="about"
+                        class="text-decoration-none text-light text-hover-dark">Know
+                        More</a></button>
+            </span>
+        </div>
+        <div class="col-12 col-lg-3 col-md-12 col-sm-12">
+            <img src="../../../assets/images/PrintMedian.jpg" style="max-width: 250px;" alt="PrintMedian"
+                class="img-fluid">
+        </div>
+    </div>
+</div>
+
+<div class="bg-dark text-light my-3">{{category}}</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 col-md-6 col-lg-3 p-2" *ngFor="let product of products">
+            <div class="product-box" (click)="openSubProduct(product)">
+                <div class="card">
+                    <img [src]="product.image" alt="Product Image" class="img-fluid" />
+                    <div class="card-body">
+                        <h4 class="card-title">{{ product.name }}</h4>
+                        <p class="card-text">{{ product.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,163 @@
+<header style="font-family: Roboto Mono">
+  <nav class="navbar navbar-expand-lg bg-primary p-1" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-5 my-3 pe-2" href="#">Print Median Enterprises</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+          <button type="button" class="btn-close m-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 mr-auto">
+            <li class="nav-item mx-3 pt-1">
+              <a class="nav-link active" aria-current="page" href="" routerLink="">Home</a>
+            </li>
+            <li class="nav-item mx-3 pt-1">
+              <a class="nav-link active" aria-current="page" href="about" routerLink="about">About</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item mx-3">
+              <a class="nav-link active" routerLink="/dashboard" *ngIf="isAdminLoggedIn">
+                Dashboard <i class="bi bi-motherboard fs-5"></i></a>
+            </li>
+            <li class="nav-item mx-3">
+              <a class="nav-link active" routerLink="/cart">
+                Cart <i class="bi bi-cart2 fs-5"></i></a>
+            </li>
+            <li class="nav-item mx-3 pt-1">
+              <a class="nav-link active cursor-pointer" data-bs-toggle="modal" data-bs-target="#LoginForm"
+                *ngIf="!isAdminLoggedIn && !isUserLoggedIn">
+                Login
+              </a>
+              <a class="nav-link active cursor-pointer" data-bs-toggle="modal" data-bs-target="#LoginForm"
+                (click)="logOut()" *ngIf="isAdminLoggedIn || isUserLoggedIn">
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Login Form -->
+<div class="modal fade" id="LoginForm" #LoginForm tabindex="-1" aria-labelledby="LoginFormLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeLoginModal()"></button>
+        <div class="myform bg-dark">
+          <h2 class="text-center">Login Form</h2>
+          <form class="text-center" [formGroup]="userLoginForm" (ngSubmit)="onSubmitLogin()">
+            <div class="" *ngIf="userLoginForm.get('email').invalid && userLoginForm.get('email').touched">Enter Valid
+              Details</div>
+            <div class="input-group form-floating my-4">
+              <input type="email" class="form-control text-center" id="inputEmail1" aria-describedby="emailHelp"
+                placeholder="Enter email address" autocomplete="username" formControlName="email" required>
+              <label for="inputEmail1" class="form-label">Email Address</label>
+              <button class="btn btn-dark text-danger" disabled
+                *ngIf="userLoginForm.get('email').invalid && userLoginForm.get('email').touched">
+                <i class="bi bi-exclamation-circle"></i>
+              </button>
+            </div>
+            <div class="input-group form-floating mb-3">
+              <input type="{{ hidePassword ? 'password':'text'}}" class="form-control text-center" id="inputPassword1"
+                placeholder="Enter 8 character password" aria-describedby="new-password" autocomplete="new-password"
+                formControlName="password" required>
+              <label for="inputPassword1">Password</label>
+              <button class="btn btn-dark" type="button" (click)="togglePasswordVisibility()"><i
+                  class="bi bi-eye{{ hidePassword ? '-slash' : '' }}"></i></button>
+            </div>
+            <button type="submit" class="btn btn-light mt-3 form-btn" (click)="showAlertMessage()">LOGIN</button>
+            <p>Not a member? <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                data-bs-target="#RegistrationForm">Signup </button></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-success alert-dismissible fade show m-3" role="alert" *ngIf="showAlert">
+  <strong> {{ alertMessage }}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> <span
+      aria-hidden="true">&times;</span></button>
+</div>
+
+<!-- Registration Form -->
+<div class="modal fade" id="RegistrationForm" #SignupForm tabindex="-1" aria-labelledby="RegistrationFormLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="myform bg-dark">
+          <h2 class="text-center">Registration Form</h2>
+          <form class="text-center" [formGroup]="userResgistrationForm" (ngSubmit)="onSubmitRegistration()">
+            <div class="input-group form-floating my-4 ">
+              <input type="text" class="form-control text-center" id="userName" autocomplete="username"
+                placeholder="Enter your name" formControlName="name" required>
+              <label for="userName" class="form-label">User Name</label>
+              <button class="btn btn-dark text-danger" disabled
+                *ngIf="userResgistrationForm.get('name').invalid && userResgistrationForm.get('name').touched">
+                <i class="bi bi-exclamation-circle"></i>
+              </button>
+            </div>
+            <div class="input-group form-floating my-4 ">
+              <input type="text" class="form-control text-center" id="mobile" placeholder="Enter mobile number"
+                formControlName="mobile" required>
+              <label for="mobile" class="form-label">Mobile</label>
+              <button class="btn btn-dark text-danger" disabled
+                *ngIf="userResgistrationForm.get('mobile').invalid && userResgistrationForm.get('mobile').touched">
+                <i class="bi bi-exclamation-circle"></i>
+              </button>
+            </div>
+            <div class="input-group form-floating my-4 ">
+              <input type="email" class="form-control text-center" id="inputEmail2" aria-describedby="emailHelp"
+                placeholder="Enter email address" autocomplete="email" formControlName="email" required>
+              <label for="inputEmail2" class="form-label">Email Address</label>
+              <button class="btn btn-dark text-danger" disabled
+                *ngIf="userResgistrationForm.get('email').invalid && userResgistrationForm.get('email').touched">
+                <i class="bi bi-exclamation-circle"></i>
+              </button>
+            </div>
+            <div class="input-group form-floating mb-3">
+              <input type="{{ hidePassword ? 'password':'text'}}" class="form-control text-center" id="inputPassword2"
+                placeholder="Enter 8 character password" aria-describedby="new-password" autocomplete="new-password"
+                formControlName="password" required>
+              <label for="inputPassword2">Password</label>
+              <button class="btn btn-dark" type="button" (click)="togglePasswordVisibility()"><i
+                  class="bi bi-eye{{ hidePassword ? '-slash' : '' }}"></i></button>
+              <div class="invalid-feedback">Please Enter valid password</div>
+            </div>
+            <div class="input-group form-floating mb-3">
+              <input type="{{ hideConfirmPassword ? 'password':'text'}}" class="form-control text-center"
+                id="inputConfirmPassword" placeholder="Enter password mentioned as above"
+                aria-describedby="new-password" autocomplete="new-password" formControlName="confirmPassword" required>
+              <label for="inputConfirmPassword">Confirm Password</label>
+              <button class="btn btn-dark" type="button" (click)="toggleConfirmPasswordVisibility()"><i
+                  class="bi bi-eye{{ hideConfirmPassword ? '-slash' : '' }}"></i></button>
+              <div class="invalid-feedback">Please Enter valid password</div>
+            </div>
+            <!-- <div class="mb-3">
+              <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control text-center" id="inputConfirmPassword"
+                aria-describedby="new-password" autocomplete="new-password"
+                placeholder="Enter password mentioned as above" formControlName="confirmPassword" required>
+            </div> -->
+            <button type="submit" class="btn btn-light mt-3 form-btn" (click)="showAlertMessage()">Signup</button>
+            <p>Already have an account? <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                data-bs-target="#LoginForm">Login </button></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

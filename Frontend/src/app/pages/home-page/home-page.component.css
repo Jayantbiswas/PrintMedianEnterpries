@@ -1,0 +1,38 @@
+#hover-btn:hover {
+  background-color: whitesmoke;
+  color: black;
+}
+
+#hover-btn:hover a {
+  color: black !important;
+}
+
+@keyframes underlineAnimation {
+  0% {
+    width: 0;
+  } /* Start with no underline */
+  100% {
+    width: 100%;
+  } /* Fully underline at the end */
+}
+
+#underline-hover {
+  text-decoration: none;
+  position: relative; /* Required for absolute positioning of pseudo-element */
+}
+
+#underline-hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0; /* Start with no underline */
+  height: 2px; /* Underline thickness */
+  background-color: #000; /* Underline color */
+  transition: width 1s ease; /* Transition for the width change */
+}
+
+#underline-hover:hover::after {
+  width: 100%; /* Fully underline on hover */
+  animation: underlineAnimation 0.3s alternate; /* Apply animation on hover */
+}

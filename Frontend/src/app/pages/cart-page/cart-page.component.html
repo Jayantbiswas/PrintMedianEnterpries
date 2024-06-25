@@ -1,0 +1,93 @@
+<div class="container-fluid">
+  <div class="row g-4 mt-5">
+    <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+      <div class="row col-12">
+        <h1 *ngIf="!totalItems">No Product Added to Cart</h1>
+        <div class="col-sm-12 col-md-6 col-lg-4 m-2" *ngFor="let product of cartProducts; let i = index">
+          <div class="card">
+            <img src={{product.image}} class="card-img-top" alt="Card Image" />
+            <div class="card-body">
+              <h2 class="card-title">{{product.name}}</h2>
+              <p class="card-text">Description of the product goes here.</p>
+              <p class="card-text">
+                Category: <span class="text-muted">Product Category</span>
+              </p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="quantity">Quantity:</label>
+                    <div class="input-group">
+                      <button type="button" class="btn btn-outline-primary" (click)="decrementQuantity(i)"
+                        id="decrementBtn">
+                        -
+                      </button>
+                      <input type="number" class="form-control" id="quantity" name="quantity"
+                        value="{{ product.quantity }}" [(ngModel)]="product.quantity" disabled />
+                      <button type="button" class="btn btn-outline-primary" (click)="incrementQuantity(i)"
+                        id="incrementBtn">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="size">Size:</label>
+                    <select class="form-control" #size name="size" (change)="getSize(size.value,i)">
+                      <option *ngFor="let size of product.size" [value]="size.value">
+                        {{size.type}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="p-3">Price : {{ product.productPrice }}</span>
+              <button type="button" class="btn btn-primary" (click)="remove(product.id)">
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="contentToConvert" class="table-responsive col-4 col-sm-4 col-md-4 col-lg-4 ">
+      <div class="container-fluid">
+        <h4 class="mb-3">Price Details</h4>
+        <hr>
+        <table class="table table-hover table-borderless">
+          <tbody>
+            <tr class="mb-3">
+              <th scope="col">Items</th>
+              <th></th>
+              <td scope="col">{{totalItems}}</td>
+            </tr>
+            <tr class="mb-3">
+              <th scope="row">Price</th>
+              <td></td>
+              <td>{{productPrice}}</td>
+            </tr>
+            <tr class="mb-3">
+              <th scope="row">Discount</th>
+              <td></td>
+              <td>{{(productPrice>1000)?discount:0}}</td>
+            </tr>
+            <hr style="width: 150%;">
+            <tr class="mb-3">
+              <th scope="row">Total</th>
+              <td></td>
+              <th colspan="2">{{totalPrice}}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="contianer d-flex flex-row-reverse">
+      <button class="btn btn-outline-success p-2 m-2 w-25" (click)="generatePDF()">Download
+        Bill</button>
+    </div>
+  </div>
+
+  <!-- <app-quotation></app-quotation> -->
